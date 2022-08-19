@@ -1,0 +1,59 @@
+CREATE TABLE Flight
+(Year_ DATE,
+CONSTRAINT chk_yr CHECK(TO_CHAR(Year_,'YYYY') >= '1999' AND TO_CHAR(Year_,'YYYY') <= '2017'),
+Month_ DATE,
+CONSTRAINT chk_mo CHECK(TO_CHAR(Month_,'MM') >= '01' AND TO_CHAR(Month_,'MM') <= '12'),
+DayMonth DATE,
+CONSTRAINT chk_d CHECK(TO_CHAR(DayMonth,'DD') >= '1' AND TO_CHAR(DayMonth,'DD') <= '31'),
+DayWeek INT,
+CONSTRAINT chk_dw CHECK(Dayweek >= 1 AND DayWeek <=7),
+DepTime TIMESTAMP,
+Actual_DepTime TIMESTAMP,
+ArrTime TIMESTAMP,
+Carrier VARCHAR2(4) UNIQUE,
+FlightNum VARCHAR2(6),
+DeptDelay INT,
+ArrDelay INT,
+Cancellation VARCHAR2(3),
+CONSTRAINT chk_canc CHECK (Cancellation IN ('Yes','No')),
+WeatherDelay INT);
+
+INSERT INTO Flight VALUES
+(to_date('2017','yyyy'),
+to_date('04','mm'),
+to_date('20','dd'),
+5,
+to_date('1430','hh24mi'),
+to_date('1400','hh24mi'),
+to_date('1820','hh24mi'),
+'131',
+'JL729',
+30,
+15,
+'No',
+0);
+
+INSERT INTO Flight VALUES
+(to_date('1999','yyyy'),
+to_date('12','mm'),
+to_date('20','dd'),
+5,
+to_date('1430','hh24mi'),
+to_date('1400','hh24mi'),
+to_date('1820','hh24mi'),
+'135',
+'JL728',
+30,
+15,
+'No',
+0);
+
+SELECT Carrier, Count(FlightNum) FROM Flight
+WHERE (DeptDelay+ArrDelay+WeatherDelay) > 0
+GROUP BY Carrier;
+
+
+
+
+
+{ id: Carrier(131), lines[{line_num:"1", Year_:”2015, Month_:”04”, DayMonth:”20”, DayWeek:”5”,DepTime:”1430”,Actual_DepTime:”1400”, ArrTIme:”1820”, Carrier:”131”,FlightNum:”JL729”, DeptDelay:”30”, ArrDelay:”15”, Cancellation:”No”, WeatherDelay:”0”}
