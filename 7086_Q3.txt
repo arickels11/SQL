@@ -1,0 +1,86 @@
+CREATE TABLE Flight
+(Year_ DATE,
+Month_ DATE,
+DayMonth DATE,
+DayWeek INT,
+DepTime TIMESTAMP,
+Actual_DepTime TIMESTAMP,
+ArrTime TIMESTAMP,
+Carrier VARCHAR2(4),
+FlightNum VARCHAR2(6),
+DeptDelay INT,
+ArrDelay INT,
+Cancellation VARCHAR2(3),
+CONSTRAINT chk_canc CHECK (Cancellation IN ('Yes','No')),
+WeatherDelay INT);
+
+INSERT INTO Flight VALUES
+(to_date('2015','yyyy'),
+to_date('04','mm'),
+to_date('20','dd'),
+5,
+to_date('1430','hh24mi'),
+to_date('1400','hh24mi'),
+to_date('1820','hh24mi'),
+'131',
+'JL729',
+30,
+15,
+'No',
+0);
+
+INSERT INTO Flight VALUES
+(to_date('2015','yyyy'),
+to_date('04','mm'),
+to_date('20','dd'),
+5,
+to_date('1430','hh24mi'),
+to_date('1400','hh24mi'),
+to_date('1820','hh24mi'),
+'131',
+'JL730',
+0,
+0,
+'No',
+10);
+
+INSERT INTO Flight VALUES
+(to_date('2015','yyyy'),
+to_date('04','mm'),
+to_date('20','dd'),
+5,
+to_date('1430','hh24mi'),
+to_date('1400','hh24mi'),
+to_date('1820','hh24mi'),
+'131',
+'JL731',
+0,
+0,
+'No',
+0);
+
+SELECT * FROM Flight
+
+SELECT Carrier, Count(FlightNum) FROM Flight
+WHERE (DeptDelay+ArrDelay+WeatherDelay) > 0
+GROUP BY Carrier;
+
+--SELECT Carrier, Count(FlightNum) FROM Flight
+--WHERE FlightNum IN(SELECT FlightNum FROM Flight WHERE (DeptDelay+ArrDelay+WeatherDelay) > 0)
+--GROUP BY Carrier;
+
+
+{ _Compkey: (131/JL729/20/04/2015), Year_:”2015, Month_:”04”, DayMonth:”20”, DayWeek:”5”,DepTime:”1430”,Actual_DepTime:”1400”, ArrTIme:”1820”, Carrier:”131”,FlightNum:”JL729”, DeptDelay:”30”, ArrDelay:”15”, Cancellation:”No”, WeatherDelay:”0”}
+{ _Compkey: (120/LA28/21/04/2015), Year_:”2015, Month_:”04”, DayMonth:”21”, DayWeek:”6”,DepTime:”0615”,Actual_DepTime:”0600”, ArrTIme:”1200”, Carrier:”120”,FlightNum:”LA28”, DeptDelay:”15”, ArrDelay:”15”, Cancellation:”No”, WeatherDelay:”0”}
+{_Compkey: 120/LA49/22/04/2015), Year_:”2015, Month_:”04”, DayMonth:”22”, DayWeek:”7”,DepTime:”1300”,Actual_DepTime:”1200”, ArrTIme:”2000”, Carrier:”120”,FlightNum:”LA49”, DeptDelay:”60”, ArrDelay:”45”, Cancellation:”No”, WeatherDelay:”0”}
+
+{_Compkey: (89/PA676/22/04/2015), Year_:”2015, Month_:”04”, DayMonth:”22”, DayWeek:”7”,DepTime:”1530”,Actual_DepTime:”1500”, ArrTIme:”1900”, Carrier:”89”,FlightNum:”PA676”, DeptDelay:”0”, ArrDelay:”0”, Cancellation:”No”, WeatherDelay:”30”}
+{_Compkey: (89/PA676/23/04/2015), Year_:”2015, Month_:”04”, DayMonth:”23”, DayWeek:”1”,DepTime:”1530”,Actual_DepTime:”1500”, ArrTIme:”1900”, Carrier:”89”,FlightNum:”PA676”, DeptDelay:”0”, ArrDelay:”0”, Cancellation:”No”, WeatherDelay:”0”}
+
+
+
+
+{_id: Carrier(131), flights[{FlightNum:"JL729", Year_:”2015, Month_:”04”, DayMonth:”20”, DayWeek:”5”,DepTime:”1430”,Actual_DepTime:”1400”, ArrTime:”1820”, DeptDelay:”30”, ArrDelay:”15”, Cancellation:”No”, WeatherDelay:”0”}]}
+{_id: Carrier(120), flights[{FlightNum:"LA28", Year_:”2015, Month_:”04”, DayMonth:”21”, DayWeek:”6”,DepTime:”0615”,Actual_DepTime:”0600”, ArrTime:”1200”, DeptDelay:”15”, ArrDelay:”15”, Cancellation:”No”, WeatherDelay:”0”}, {FlightNum:"LA49", Year_:”2015, Month_:”04”, DayMonth:”22”, DayWeek:”7”,DepTime:”1300”,Actual_DepTime:”1200”, ArrTime:”2000”, DeptDelay:60”, ArrDelay:”45”, Cancellation:”No”, WeatherDelay:”0”}]}
+{_id: Carrier(89), flights[{FlightNum:"PA676", Year_:”2015, Month_:”04”, DayMonth:”22”, DayWeek:”7”,DepTime:”1530”,Actual_DepTime:”1500”, ArrTime:”1900”, DeptDelay:”0”, ArrDelay:”0”, Cancellation:”No”, WeatherDelay:”30”}, {FlightNum:"PA676", Year_:”2015, Month_:”04”, DayMonth:”23”, DayWeek:”1”,DepTime:”1500”,Actual_DepTime:”1500”, ArrTime:”1920”, DeptDelay:0”, ArrDelay:”20”, Cancellation:”No”, WeatherDelay:”0”},{FlightNum:"PA290", Year_:”2015, Month_:”04”, DayMonth:”23”, DayWeek:”1”,DepTime:”1200”,Actual_DepTime:”1200”, ArrTime:”2100”, DeptDelay:0”, ArrDelay:”0”, Cancellation:”No”, WeatherDelay:”0”}]}
+
